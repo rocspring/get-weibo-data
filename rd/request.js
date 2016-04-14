@@ -4,14 +4,13 @@ var save = require('./save.js');
 // var Promise = require('bluebird');
 var Q = require('q');
 
-var follwersListMaxPage = 0,
-    fansListMaxPage = 0,
-    follwersList = [],
-    fansList = [];
-
 function promiseGetFollwersList(containerid, page) {
     console.log('start getFollwersList.');
     page = page || 1;
+
+    var follwersListMaxPage = 0,
+        follwersList = [];
+
     var deferred = Q.defer();
     getFollwersList(containerid, page);
     return deferred.promise;
@@ -42,7 +41,7 @@ function promiseGetFollwersList(containerid, page) {
 
                     if (nextPage > follwersListMaxPage) {
                         console.log('获取关注列表结束...' + 'follwersListMaxPage:'+ follwersListMaxPage );
-                        save.saveData('./rd/follwers/' + containerid + '_follwers.txt', JSON.stringify(follwersList));
+                        save.saveData('./data/follwers/' + containerid + '_follwers.txt', JSON.stringify(follwersList));
                         deferred.resolve();
                         return;
                     } else {
@@ -59,6 +58,9 @@ function promiseGetFollwersList(containerid, page) {
 function promiseGetFansList(containerid, page) {
     console.log('start getFansList.');
     page = page || 1;
+
+    var fansListMaxPage = 0,
+        fansList = [];
     var deferred = Q.defer();
     getFansList(containerid, page);
     return deferred.promise;
@@ -89,7 +91,7 @@ function promiseGetFansList(containerid, page) {
 
                     if (nextPage > fansListMaxPage) {
                         console.log('获取粉丝列表结束...' + 'fansListMaxPage:'+ fansListMaxPage);
-                        save.saveData('./rd/fans/' + containerid + '_fans.txt', JSON.stringify(fansList));
+                        save.saveData('./data/fans/' + containerid + '_fans.txt', JSON.stringify(fansList));
                         deferred.resolve();
                         return;
                     } else {

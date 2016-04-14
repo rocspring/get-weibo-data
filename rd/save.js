@@ -1,25 +1,19 @@
-var fs = require('fs');
+var fs = require('file-system');
 var path = require('path');
 
 function saveData(path, data) {
+    writeToFile(path, data);
+}
 
+function writeToFile(path, data) {
     var isFileExist = fs.existsSync(path);
 
-    if (isFileExist) {
-        writeFile(path, data);
-    } else {
-        creatFile(path, data);
+    if(!isFileExist){
+        // 过滤最后存在的文件路径
+        var dir = path.replace(/(\/[^\/]*\.[^\/]*)$/, '');
+        fs.mkdirSync(dir);
     }
-}
 
-function writeFile(path, data) {
-
-    fs.openSync(path, 'w');
-    fs.appendFileSync(path, data);
-    // fs.close(path);
-}
-
-function creatFile(path, data) {
     fs.openSync(path, 'w');
     fs.appendFileSync(path, data);
     // fs.close(path);

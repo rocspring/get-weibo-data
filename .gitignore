@@ -11,5 +11,7 @@
 
 bower_components/
 node_modules/
-rd/fans/
-rd/follwers/
+data/fans/
+data/follwers/
+**/data/fans/
+**/data/follwers/
