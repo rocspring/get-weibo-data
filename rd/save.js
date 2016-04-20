@@ -1,11 +1,15 @@
 var fs = require('file-system');
 var path = require('path');
+var Q = require('q');
 
+// 通过promise进行改造
 function saveData(path, data) {
-    writeToFile(path, data);
+    var deferred = Q.defer();
+    writeToFile(path, data, deferred);
+    return deferred.promise;
 }
 
-function writeToFile(path, data) {
+function writeToFile(path, data, deferred) {
     var isFileExist = fs.existsSync(path);
 
     if(!isFileExist){
@@ -16,6 +20,7 @@ function writeToFile(path, data) {
 
     fs.openSync(path, 'w');
     fs.appendFileSync(path, data);
+    deferred.resolve();
     // fs.close(path);
 }
 
